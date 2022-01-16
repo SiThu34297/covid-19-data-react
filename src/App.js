@@ -9,9 +9,18 @@ import CoronaImage from "./images/image.png";
 function App() {
   const [data, setData] = React.useState({ data: {} });
 
-  React.useEffect(async () => {
-    const data = await fetchData();
-    setData({ data: data });
+  React.useEffect(() => {
+    let apiCall = true;
+    if (apiCall) {
+      const fetchAPI = async () => {
+        const data = await fetchData();
+        setData({ data: data });
+      };
+      fetchAPI();
+    }
+    return () => {
+      apiCall = true;
+    };
   }, []);
 
   const handleCountryChange = async (country) => {
